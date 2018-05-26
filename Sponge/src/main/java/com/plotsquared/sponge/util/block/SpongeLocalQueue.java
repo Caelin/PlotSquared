@@ -443,6 +443,7 @@ public class SpongeLocalQueue extends BasicLocalBlockQueue<char[]> {
                 continue;
             }
             ExtendedBlockStorage section = nmsChunk.getBlockStorageArray()[layer];
+            if (section == null) { continue; }
             short[] cacheX = MainUtil.x_loc[0];
             short[] cacheY = MainUtil.y_loc[0];
             short[] cacheZ = MainUtil.z_loc[0];

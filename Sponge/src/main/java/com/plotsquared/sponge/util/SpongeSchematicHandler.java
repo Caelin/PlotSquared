@@ -125,12 +125,12 @@ public class SpongeSchematicHandler extends SchematicHandler {
                                     int Z = chunk.z;
                                     int xxb = X << 4;
                                     int zzb = Z << 4;
-                                    if (!worldObj.getChunk(xxb, 1, zzb).isPresent() && !worldObj.loadChunk(xxb, 1, zzb, false).isPresent()) {
+                                    if (!worldObj.getChunk(X, 0, Z).isPresent() && !worldObj.loadChunk(Z, 0, Z, false).isPresent()) {
                                         continue;
                                     }
                                     int xxt = xxb + 15;
                                     int zzt = zzb + 15;
-                                    
+
                                     if (X == bcx) {
                                         xxb = p1x;
                                     }
