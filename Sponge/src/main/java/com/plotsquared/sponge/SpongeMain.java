@@ -66,6 +66,7 @@ import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameAboutToStartServerEvent;
+import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
@@ -140,12 +141,16 @@ public class SpongeMain implements IPlotMain {
     }
 
     @Listener
-    public void onServerAboutToStart(GameAboutToStartServerEvent event) {
+    public void onGameInitialization(GameInitializationEvent event) {
         THIS = this;
         new PS(this, "Sponge");
+        Sponge.getRegistry().register(WorldGeneratorModifier.class, (WorldGeneratorModifier) PS.get().IMP.getDefaultGenerator().specify(null));
+        Sponge.getRegistry().register(WorldGeneratorModifier.class, (WorldGeneratorModifier) new SingleWorldGenerator().specify(null));
         this.server = this.game.getServer();
-        this.game.getRegistry().register(WorldGeneratorModifier.class, (WorldGeneratorModifier) PS.get().IMP.getDefaultGenerator().specify(null));
-        this.game.getRegistry().register(WorldGeneratorModifier.class, (WorldGeneratorModifier) new SingleWorldGenerator().specify(null));
+    }
+
+    @Listener
+    public void onServerAboutToStart(GameAboutToStartServerEvent event) {
         if (Settings.Enabled_Components.WORLDS) {
             TaskManager.IMP.taskRepeat(new Runnable() {
                 @Override
